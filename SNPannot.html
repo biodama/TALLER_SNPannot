@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+        <meta name="author" content="Pablo Fernández - Celia Talaván" />
+    
+        <meta name="date" content="2024-12-09" />
+    
+    <title>SNPannot</title>
+
+        <script src="SNPannot_files/header-attrs-2.25/header-attrs.js"></script>
+        <script src="SNPannot_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="SNPannot_files/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="SNPannot_files/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="SNPannot_files/navigation-1.1/tabsets.js"></script>
+        <link href="SNPannot_files/readthedown-0.1/readthedown.css" rel="stylesheet" />
+        <link href="SNPannot_files/readthedown-0.1/readthedown_fonts_embed.css" rel="stylesheet" />
+        <script src="SNPannot_files/readthedown-0.1/readthedown.js"></script>
+        <script src="SNPannot_files/kePrint-0.0.1/kePrint.js"></script>
+        <link href="SNPannot_files/lightable-0.0.1/lightable.css" rel="stylesheet" />
+    
+    
+        <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          color: #aaaaaa;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+      div.sourceCode
+        {  background-color: #f8f8f8; }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span.al { color: #ef2929; } /* Alert */
+      code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+      code span.at { color: #204a87; } /* Attribute */
+      code span.bn { color: #0000cf; } /* BaseN */
+      code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #4e9a06; } /* Char */
+      code span.cn { color: #8f5902; } /* Constant */
+      code span.co { color: #8f5902; font-style: italic; } /* Comment */
+      code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+      code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+      code span.dt { color: #204a87; } /* DataType */
+      code span.dv { color: #0000cf; } /* DecVal */
+      code span.er { color: #a40000; font-weight: bold; } /* Error */
+      code span.ex { } /* Extension */
+      code span.fl { color: #0000cf; } /* Float */
+      code span.fu { color: #204a87; font-weight: bold; } /* Function */
+      code span.im { } /* Import */
+      code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+      code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+      code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+      code span.ot { color: #8f5902; } /* Other */
+      code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+      code span.sc { color: #ce5c00; font-weight: bold; } /* SpecialChar */
+      code span.ss { color: #4e9a06; } /* SpecialString */
+      code span.st { color: #4e9a06; } /* String */
+      code span.va { color: #000000; } /* Variable */
+      code span.vs { color: #4e9a06; } /* VerbatimString */
+      code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
+    
+        <link rel="stylesheet" href="custom.css" type="text/css" />
+    
+    <!-- tabsets -->
+    <script>
+      $(document).ready(function () {
+	  window.buildTabsets("toc");
+      });
+      $(document).ready(function () {
+	  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+	      $(this).parent().toggleClass('nav-tabs-open')
+	  });
+      });
+    </script>
+
+    <!-- code folding -->
+    
+    <!-- code download -->
+    
+    <!-- tabsets dropdown -->
+
+    <style type="text/css">
+      .tabset-dropdown > .nav-tabs {
+	  display: inline-table;
+	  max-height: 500px;
+	  min-height: 44px;
+	  overflow-y: auto;
+	  background: white;
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+	  content: "&#xe258;";
+	  border: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active {
+	  display: block;
+      }
+
+      .tabset-dropdown > .nav-tabs > li.active a {
+  	  padding: 0 15px !important;
+      }
+
+      .tabset-dropdown > .nav-tabs > li > a,
+      .tabset-dropdown > .nav-tabs > li > a:focus,
+      .tabset-dropdown > .nav-tabs > li > a:hover {
+	  border: none;
+	  display: inline-block;
+	  border-radius: 4px;
+	  background-color: transparent;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+	  display: block;
+	  float: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li {
+	  display: none;
+	  margin-left: 0 !important;
+      }
+    </style>
+    
+</head>
+
+<body class="preload">
+
+   	
+         <!-- readthedown start -->   
+   <div id="content" data-toggle="wy-nav-shift">
+     <nav id="nav-top" role="navigation" aria-label="top navigation">
+       <a role="button" href="#" data-toggle="wy-nav-top"><span class="glyphicon glyphicon-menu-hamburger"></span></a>
+     </nav>
+         
+   
+        
+      <h1 class="title">SNPannot</h1>
+      
+         <!-- readthedown authors -->
+   <div id="sidebar">
+    <h2><a href="#content">SNPannot</a></h2>
+    <div id="toc">
+      <ul>
+      <li><a href="#snpannot-r-package"
+      id="toc-snpannot-r-package">SNPannot R package</a></li>
+      <li><a href="#installation"
+      id="toc-installation">Installation</a></li>
+      <li><a href="#data-source" id="toc-data-source">Data
+      Source</a></li>
+      <li><a href="#function-1-dbsnp_info"
+      id="toc-function-1-dbsnp_info">Function 1: dbSNP_info</a></li>
+      <li><a href="#function-2-snp_gene"
+      id="toc-function-2-snp_gene">Function 2: snp_gene</a></li>
+      <li><a href="#license" id="toc-license">License</a></li>
+      </ul>
+    </div>
+    <div id="postamble" data-toggle="wy-nav-shift" class="status">
+                  <p class="author"><span class="glyphicon glyphicon-user"></span> Pablo
+Fernández - Celia Talaván</p>
+                        <p class="date"><span class="glyphicon glyphicon-calendar"></span> 2024-12-09</p>
+          </div>
+   </div>
+     
+
+   
+      
+   
+<!-- Don't indent these lines or it will mess pre blocks indentation --> 
+<div id="main">
+<div id="snpannot-r-package" class="section level2">
+<h2>SNPannot R package</h2>
+<ul>
+<li><p>SNPannot is a R package designed to perform an annotation of
+single nucleotide polymorphisms.</p></li>
+<li><p>This package has been developed in the context of the <a
+href="https://cancer.genrisk.org/en/">CIBERESP Strategic Subprogram
+Genrisk</a>.</p></li>
+<li><p><a href="https://github.com/biodama/SNPannot">GitHub</a></p></li>
+</ul>
+</div>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>You can install the development version of SNPannot from <a
+href="https://github.com/">GitHub</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># install.packages(&quot;devtools&quot;)</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;biodama/SNPannot&quot;</span>)</span></code></pre></div>
+</div>
+<div id="data-source" class="section level2">
+<h2>Data Source</h2>
+<p>This set of functions in package accesses data from:</p>
+<ul>
+<li><strong>NCBI’s dbSNP SNP database</strong>
+<ul>
+<li>See <a href="https://www.ncbi.nlm.nih.gov/snp/">dbSNP</a> for more
+details.</li>
+<li>Function: <strong>dbSNP_info</strong></li>
+</ul></li>
+<li><strong>NCBI’s dbSNP Gene database</strong>
+<ul>
+<li>See <a href="https://www.ncbi.nlm.nih.gov/gene/">Gene</a> for more
+details.</li>
+<li>Function: <strong>snp_gene</strong></li>
+</ul></li>
+<li><strong>Ontology Resource</strong>
+<ul>
+<li>See <a href="http://geneontology.org/">GO</a> for more details.</li>
+<li>Function: <strong>snp_gene</strong></li>
+</ul></li>
+</ul>
+</div>
+<div id="function-1-dbsnp_info" class="section level2">
+<h2>Function 1: dbSNP_info</h2>
+<p>Searches the dbSNP database belonging to NCBI in order to annotate
+the genes belonging to that SNP. According to the SNP name or position,
+the function annotates the GRCh37, GRCh38 and also SNPs in linkage
+disequilibrium (LD) <a
+href="https://www.internationalgenome.org/data">1000Genomes:phase3</a>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;SNPannot&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">help</span>(<span class="st">&quot;dbSNP_info&quot;</span>)</span></code></pre></div>
+<object data="dbSNP.pdf" type="application/pdf" width="100%" height="500">
+<p>
+El archivo PDF no se pudo cargar
+</p>
+</object>
+<div id="ejemplo-1" class="section level3">
+<h3>Ejemplo 1:</h3>
+<p><a href="https://www.pgscatalog.org/score/PGS000146/">PGS Catalog -
+PGS000146</a></p>
+<div id="pgs" style="text-align: center;">
+<p><img src="pgs_crc.png" alt="Logo" style="width: 1000px;"/></p>
+</div>
+<p><a
+href="https://ftp.ebi.ac.uk/pub/databases/spot/pgs/scores/PGS000146/ScoringFiles/">Download
+PGS000146</a></p>
+<div id="pgs2" style="text-align: center;">
+<p><img src="dow.png" alt="Logo" style="width: 1000px;"/></p>
+</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>pgs<span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(<span class="st">&quot;https://ftp.ebi.ac.uk/pub/databases/spot/pgs/scores/PGS000146/ScoringFiles/Harmonized/PGS000146_hmPOS_GRCh37.txt.gz&quot;</span>,<span class="at">skip =</span> <span class="dv">19</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>pgs<span class="sc">$</span>GRCh37 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(pgs<span class="sc">$</span>chr_name, <span class="st">&quot;:&quot;</span>, pgs<span class="sc">$</span>chr_position)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>pgs2<span class="ot">&lt;-</span>pgs[<span class="fu">c</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">18</span>,<span class="dv">19</span>),]</span></code></pre></div>
+<table class="table" style="font-size: 15px; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+rsID
+</th>
+<th style="text-align:left;">
+chr_name
+</th>
+<th style="text-align:left;">
+chr_position
+</th>
+<th style="text-align:left;">
+effect_allele
+</th>
+<th style="text-align:left;">
+other_allele
+</th>
+<th style="text-align:left;">
+effect_weight
+</th>
+<th style="text-align:left;">
+allelefrequency_effect
+</th>
+<th style="text-align:left;">
+OR
+</th>
+<th style="text-align:left;">
+hm_source
+</th>
+<th style="text-align:left;">
+hm_rsID
+</th>
+<th style="text-align:left;">
+hm_chr
+</th>
+<th style="text-align:left;">
+hm_pos
+</th>
+<th style="text-align:left;">
+hm_inferOtherAllele
+</th>
+<th style="text-align:left;">
+hm_match_chr
+</th>
+<th style="text-align:left;">
+hm_match_pos
+</th>
+<th style="text-align:left;">
+GRCh37
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+rs647161
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+134499092
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+0.10
+</td>
+<td style="text-align:left;">
+0.67
+</td>
+<td style="text-align:left;">
+1.11
+</td>
+<td style="text-align:left;">
+ENSEMBL
+</td>
+<td style="text-align:left;">
+rs647161
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+134499092
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+5:134499092
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs1321311
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+36622900
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+0.10
+</td>
+<td style="text-align:left;">
+0.25
+</td>
+<td style="text-align:left;">
+1.10
+</td>
+<td style="text-align:left;">
+ENSEMBL
+</td>
+<td style="text-align:left;">
+rs1321311
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+36622900
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+6:36622900
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs16892766
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+117630683
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+0.22
+</td>
+<td style="text-align:left;">
+0.08
+</td>
+<td style="text-align:left;">
+1.25
+</td>
+<td style="text-align:left;">
+ENSEMBL
+</td>
+<td style="text-align:left;">
+rs16892766
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+117630683
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+8:117630683
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs6983267
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+128413305
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+T
+</td>
+<td style="text-align:left;">
+0.19
+</td>
+<td style="text-align:left;">
+0.50
+</td>
+<td style="text-align:left;">
+1.21
+</td>
+<td style="text-align:left;">
+ENSEMBL
+</td>
+<td style="text-align:left;">
+rs6983267
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+128413305
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+8:128413305
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs719725
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+6365683
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+0.07
+</td>
+<td style="text-align:left;">
+0.62
+</td>
+<td style="text-align:left;">
+1.07
+</td>
+<td style="text-align:left;">
+ENSEMBL
+</td>
+<td style="text-align:left;">
+rs719725
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+6365683
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+9:6365683
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs10795668
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+8701219
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+0.11
+</td>
+<td style="text-align:left;">
+0.69
+</td>
+<td style="text-align:left;">
+1.12
+</td>
+<td style="text-align:left;">
+ENSEMBL
+</td>
+<td style="text-align:left;">
+rs10795668
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+8701219
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+10:8701219
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs1957636
+</td>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;">
+54410919
+</td>
+<td style="text-align:left;">
+T
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+0.08
+</td>
+<td style="text-align:left;">
+0.41
+</td>
+<td style="text-align:left;">
+1.08
+</td>
+<td style="text-align:left;">
+ENSEMBL
+</td>
+<td style="text-align:left;">
+rs1957636
+</td>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;">
+54560018
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+14:54410919
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs4444235
+</td>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;">
+54560018
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+T
+</td>
+<td style="text-align:left;">
+0.09
+</td>
+<td style="text-align:left;">
+0.46
+</td>
+<td style="text-align:left;">
+1.09
+</td>
+<td style="text-align:left;">
+ENSEMBL
+</td>
+<td style="text-align:left;">
+rs4444235
+</td>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;">
+54410919
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:left;">
+14:54560018
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Apply dbSNP_info function</strong></p>
+<p>Searching for information on some SNPs from rsID</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>snp_anot<span class="ot">&lt;-</span> <span class="fu">dbSNP_info</span>(<span class="at">dat =</span> pgs2<span class="sc">$</span>rsID, <span class="at">type =</span> <span class="st">&quot;rs&quot;</span>, <span class="at">p =</span> T, <span class="at">build =</span> <span class="dv">37</span>, <span class="at">r2 =</span> <span class="fl">0.99</span>,<span class="at">pop =</span> <span class="st">&quot;EUR&quot;</span>)</span></code></pre></div>
+<table class="table" style="font-size: 15px; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+rsID
+</th>
+<th style="text-align:left;">
+gene
+</th>
+<th style="text-align:left;">
+alleles
+</th>
+<th style="text-align:left;">
+GRCh37
+</th>
+<th style="text-align:left;">
+GRCh38
+</th>
+<th style="text-align:left;">
+rs_ld
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+rs647161
+</td>
+<td style="text-align:left;">
+rs647161
+</td>
+<td style="text-align:left;">
+PITX1-AS1
+</td>
+<td style="text-align:left;">
+C&gt;A,T
+</td>
+<td style="text-align:left;">
+5:134499092
+</td>
+<td style="text-align:left;">
+5:135163402
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs1321311
+</td>
+<td style="text-align:left;">
+rs1321311;rs59148954
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+C&gt;A,G
+</td>
+<td style="text-align:left;">
+6:36622900
+</td>
+<td style="text-align:left;">
+6:36655123
+</td>
+<td style="text-align:left;">
+rs9918353;rs9470358;rs7742159
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs16892766
+</td>
+<td style="text-align:left;">
+rs16892766;rs386541188;rs58713577
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+A&gt;C
+</td>
+<td style="text-align:left;">
+8:117630683
+</td>
+<td style="text-align:left;">
+8:116618444
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs6983267
+</td>
+<td style="text-align:left;">
+rs6983267;rs61163584;rs17467153
+</td>
+<td style="text-align:left;">
+CASC8;CCAT2
+</td>
+<td style="text-align:left;">
+G&gt;T
+</td>
+<td style="text-align:left;">
+8:128413305
+</td>
+<td style="text-align:left;">
+8:127401060
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs719725
+</td>
+<td style="text-align:left;">
+rs719725
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+A&gt;C,G,T
+</td>
+<td style="text-align:left;">
+9:6365683
+</td>
+<td style="text-align:left;">
+9:6365683
+</td>
+<td style="text-align:left;">
+rs7875811;rs7020964;rs7875812;rs7022186;rs10975557;rs10975553
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs10795668
+</td>
+<td style="text-align:left;">
+rs10795668;rs60782192
+</td>
+<td style="text-align:left;">
+LOC105376400
+</td>
+<td style="text-align:left;">
+G&gt;A
+</td>
+<td style="text-align:left;">
+10:8701219
+</td>
+<td style="text-align:left;">
+10:8659256
+</td>
+<td style="text-align:left;">
+rs11255815;rs9733843
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs1957636
+</td>
+<td style="text-align:left;">
+rs1957636;rs57499501;rs17309882;rs4901484
+</td>
+<td style="text-align:left;">
+LOC105370507
+</td>
+<td style="text-align:left;">
+T&gt;C
+</td>
+<td style="text-align:left;">
+14:54560018
+</td>
+<td style="text-align:left;">
+14:54093300
+</td>
+<td style="text-align:left;">
+rs1951652;rs4901480;rs113491131;rs7493655;rs12879025;rs12894049
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs4444235
+</td>
+<td style="text-align:left;">
+rs4444235;rs57525489
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+T&gt;C
+</td>
+<td style="text-align:left;">
+14:54410919
+</td>
+<td style="text-align:left;">
+14:53944201
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+<p>Searching for information on some SNPs from position</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>snp_anot2<span class="ot">&lt;-</span> <span class="fu">dbSNP_info</span>(<span class="at">dat =</span> pgs2<span class="sc">$</span><span class="st">&quot;GRCh37&quot;</span>, <span class="at">type =</span> <span class="st">&quot;pos&quot;</span>, <span class="at">p =</span> T, <span class="at">build =</span> <span class="dv">37</span>, <span class="at">r2 =</span> <span class="fl">0.99</span>,<span class="at">pop =</span> <span class="st">&quot;EUR&quot;</span>)</span></code></pre></div>
+<table class="table" style="font-size: 15px; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+rsID
+</th>
+<th style="text-align:left;">
+gene
+</th>
+<th style="text-align:left;">
+alleles
+</th>
+<th style="text-align:left;">
+GRCh37
+</th>
+<th style="text-align:left;">
+GRCh38
+</th>
+<th style="text-align:left;">
+rs_ld
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+5:134499092
+</td>
+<td style="text-align:left;">
+rs647161
+</td>
+<td style="text-align:left;">
+PITX1-AS1
+</td>
+<td style="text-align:left;">
+C&gt;A,T
+</td>
+<td style="text-align:left;">
+5:134499092
+</td>
+<td style="text-align:left;">
+5:135163402
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+6:36622900
+</td>
+<td style="text-align:left;">
+rs1321311;rs59148954
+</td>
+<td style="text-align:left;">
+MIR3925
+</td>
+<td style="text-align:left;">
+C&gt;A,G
+</td>
+<td style="text-align:left;">
+6:36622900
+</td>
+<td style="text-align:left;">
+6:36655123
+</td>
+<td style="text-align:left;">
+rs7742159;rs9470358;rs9918353
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+8:117630683
+</td>
+<td style="text-align:left;">
+rs16892766;rs386541188;rs58713577
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+A&gt;C
+</td>
+<td style="text-align:left;">
+8:117630683
+</td>
+<td style="text-align:left;">
+8:116618444
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+8:128413305
+</td>
+<td style="text-align:left;">
+rs6983267;rs61163584;rs17467153
+</td>
+<td style="text-align:left;">
+CASC8;CCAT2
+</td>
+<td style="text-align:left;">
+G&gt;T
+</td>
+<td style="text-align:left;">
+8:128413305
+</td>
+<td style="text-align:left;">
+8:127401060
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9:6365683
+</td>
+<td style="text-align:left;">
+rs719725
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+A&gt;C,G,T
+</td>
+<td style="text-align:left;">
+9:6365683
+</td>
+<td style="text-align:left;">
+9:6365683
+</td>
+<td style="text-align:left;">
+rs10975553;rs7020964;rs7875811;rs10975557;rs7022186;rs7875812
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+10:8701219
+</td>
+<td style="text-align:left;">
+rs10795668;rs60782192
+</td>
+<td style="text-align:left;">
+LOC105376400
+</td>
+<td style="text-align:left;">
+G&gt;A
+</td>
+<td style="text-align:left;">
+10:8701219
+</td>
+<td style="text-align:left;">
+10:8659256
+</td>
+<td style="text-align:left;">
+rs9733843;rs11255815
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+14:54410919
+</td>
+<td style="text-align:left;">
+rs4444235;rs57525489
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+T&gt;C
+</td>
+<td style="text-align:left;">
+14:54410919
+</td>
+<td style="text-align:left;">
+14:53944201
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+14:54560018
+</td>
+<td style="text-align:left;">
+rs1957636;rs57499501;rs17309882;rs4901484
+</td>
+<td style="text-align:left;">
+LOC105370507
+</td>
+<td style="text-align:left;">
+T&gt;C
+</td>
+<td style="text-align:left;">
+14:54560018
+</td>
+<td style="text-align:left;">
+14:54093300
+</td>
+<td style="text-align:left;">
+rs113491131;rs4901480;rs12894049;rs12879025;rs7493655;rs1951652
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="function-2-snp_gene" class="section level2">
+<h2>Function 2: snp_gene</h2>
+<p>Searches NCBI Gene database and Gene Ontology Resource in order to
+obtain relevant and specific information about the entered genes. The
+function can be based on data generated by the <em>dbSNP_info()</em>, or
+on user data.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">help</span>(<span class="st">&quot;snp_gene&quot;</span>)</span></code></pre></div>
+<object data="snp_gene.pdf" type="application/pdf" width="100%" height="500">
+<p>
+El archivo PDF no se pudo cargar
+</p>
+</object>
+<div id="ejemplo-1-1" class="section level3">
+<h3>Ejemplo 1:</h3>
+<p><a href="https://www.pgscatalog.org/score/PGS000084/">PGS Catalog -
+PGS000084</a></p>
+<div id="pgs2" style="text-align: center;">
+<p><img src="pgs_pc.png" alt="Logo" style="width: 1000px;"/></p>
+</div>
+<p><a
+href="https://ftp.ebi.ac.uk/pub/databases/spot/pgs/scores/PGS000084/ScoringFiles/Harmonized/PGS000084_hmPOS_GRCh37.txt.gz">Download
+PGS000084</a></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>temp <span class="ot">&lt;-</span> data.table<span class="sc">::</span><span class="fu">fread</span>(<span class="st">&quot;https://ftp.ebi.ac.uk/pub/databases/spot/pgs/scores/PGS000084/ScoringFiles/Harmonized/PGS000084_hmPOS_GRCh37.txt.gz&quot;</span>,<span class="at">skip =</span> <span class="dv">19</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>temp<span class="sc">$</span>GRCh37 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(temp<span class="sc">$</span>chr_name, <span class="st">&quot;:&quot;</span>, temp<span class="sc">$</span>chr_position)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>temp2<span class="ot">&lt;-</span>temp[<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">13</span>),]</span></code></pre></div>
+<table class="table" style="font-size: 15px; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+rsID
+</th>
+<th style="text-align:left;">
+chr_name
+</th>
+<th style="text-align:left;">
+chr_position
+</th>
+<th style="text-align:left;">
+effect_allele
+</th>
+<th style="text-align:left;">
+other_allele
+</th>
+<th style="text-align:left;">
+effect_weight
+</th>
+<th style="text-align:left;">
+allelefrequency_effect
+</th>
+<th style="text-align:left;">
+variant_description
+</th>
+<th style="text-align:left;">
+OR
+</th>
+<th style="text-align:left;">
+hm_source
+</th>
+<th style="text-align:left;">
+hm_rsID
+</th>
+<th style="text-align:left;">
+hm_chr
+</th>
+<th style="text-align:left;">
+hm_pos
+</th>
+<th style="text-align:left;">
+hm_inferOtherAllele
+</th>
+<th style="text-align:left;">
+hm_match_chr
+</th>
+<th style="text-align:left;">
+hm_match_pos
+</th>
+<th style="text-align:left;">
+GRCh37
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+rs17599629
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+150658287
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+0.07
+</td>
+<td style="text-align:left;">
+0.22
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+1.07
+</td>
+<td style="text-align:left;">
+ENSEMBL
+</td>
+<td style="text-align:left;">
+rs17599629
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+150658287
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+1:150658287
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs9306895
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+20878153
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+T
+</td>
+<td style="text-align:left;">
+0.08
+</td>
+<td style="text-align:left;">
+0.36
+</td>
+<td style="text-align:left;">
+Variant info (UK Biobank) = 2:20878153-C
+</td>
+<td style="text-align:left;">
+1.08
+</td>
+<td style="text-align:left;">
+ENSEMBL
+</td>
+<td style="text-align:left;">
+rs9306895
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+20878153
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+2:20878153
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs721048
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+63131731
+</td>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:left;">
+G
+</td>
+<td style="text-align:left;">
+0.10
+</td>
+<td style="text-align:left;">
+0.18
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+1.10
+</td>
+<td style="text-align:left;">
+ENSEMBL
+</td>
+<td style="text-align:left;">
+rs721048
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+63131731
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+2:63131731
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs2430386
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+63178111
+</td>
+<td style="text-align:left;">
+T
+</td>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:left;">
+0.13
+</td>
+<td style="text-align:left;">
+0.50
+</td>
+<td style="text-align:left;">
+Variant info (UK Biobank) = 2:63178111-T
+</td>
+<td style="text-align:left;">
+1.14
+</td>
+<td style="text-align:left;">
+ENSEMBL
+</td>
+<td style="text-align:left;">
+rs2430386
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+63178111
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:left;">
+2:63178111
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>snps_anot3<span class="ot">&lt;-</span> <span class="fu">dbSNP_info</span>(<span class="at">dat =</span> temp2<span class="sc">$</span><span class="st">&quot;rsID&quot;</span>, <span class="at">type =</span> <span class="st">&quot;rs&quot;</span>, <span class="at">p =</span> T, <span class="at">build =</span> <span class="dv">37</span>, <span class="at">r2 =</span> <span class="fl">0.99</span>,<span class="at">pop =</span> <span class="st">&quot;EUR&quot;</span>)</span></code></pre></div>
+<table class="table" style="font-size: 15px; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+rsID
+</th>
+<th style="text-align:left;">
+gene
+</th>
+<th style="text-align:left;">
+alleles
+</th>
+<th style="text-align:left;">
+GRCh37
+</th>
+<th style="text-align:left;">
+GRCh38
+</th>
+<th style="text-align:left;">
+rs_ld
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+rs17599629
+</td>
+<td style="text-align:left;">
+rs17599629;rs386544057;rs60390389
+</td>
+<td style="text-align:left;">
+GOLPH3L
+</td>
+<td style="text-align:left;">
+A&gt;G
+</td>
+<td style="text-align:left;">
+1:150658287
+</td>
+<td style="text-align:left;">
+1:150685811
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs9306895
+</td>
+<td style="text-align:left;">
+rs9306895;rs58147416
+</td>
+<td style="text-align:left;">
+GDF7
+</td>
+<td style="text-align:left;">
+T&gt;C
+</td>
+<td style="text-align:left;">
+2:20878153
+</td>
+<td style="text-align:left;">
+2:20678393
+</td>
+<td style="text-align:left;">
+rs9306894
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs721048
+</td>
+<td style="text-align:left;">
+rs721048;rs61072092
+</td>
+<td style="text-align:left;">
+EHBP1
+</td>
+<td style="text-align:left;">
+G&gt;A
+</td>
+<td style="text-align:left;">
+2:63131731
+</td>
+<td style="text-align:left;">
+2:62904596
+</td>
+<td style="text-align:left;">
+rs2710646
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rs2430386
+</td>
+<td style="text-align:left;">
+rs2430386
+</td>
+<td style="text-align:left;">
+EHBP1
+</td>
+<td style="text-align:left;">
+C&gt;G,T
+</td>
+<td style="text-align:left;">
+2:63178111
+</td>
+<td style="text-align:left;">
+2:62950976
+</td>
+<td style="text-align:left;">
+rs2539990;rs59030066
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>inf_fuc<span class="ot">&lt;-</span> <span class="fu">snp_gene</span>(<span class="at">dat =</span> snps_anot3, <span class="at">type =</span> <span class="st">&quot;info&quot;</span>, <span class="at">p =</span> T) </span></code></pre></div>
+<table class="table" style="font-size: 15px; color: black; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+hgnc
+</th>
+<th style="text-align:left;">
+entrez_id
+</th>
+<th style="text-align:left;">
+gene_des
+</th>
+<th style="text-align:left;">
+gene_type
+</th>
+<th style="text-align:left;">
+refseq
+</th>
+<th style="text-align:left;">
+also
+</th>
+<th style="text-align:left;">
+info
+</th>
+<th style="text-align:left;">
+GO_id
+</th>
+<th style="text-align:left;">
+GO_des
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+GOLPH3L
+</td>
+<td style="text-align:left;">
+GOLPH3L
+</td>
+<td style="text-align:left;">
+55204
+</td>
+<td style="text-align:left;">
+golgi phosphoprotein 3 like
+</td>
+<td style="text-align:left;">
+protein coding
+</td>
+<td style="text-align:left;">
+REVIEWED
+</td>
+<td style="text-align:left;">
+GPP34R
+</td>
+<td style="text-align:left;min-width: 10cm; ">
+The Golgi complex plays a key role in the sorting and modification of
+proteins exported from the endoplasmic reticulum. The protein encoded by
+this gene is localized at the Golgi stack and may have a regulatory role
+in Golgi trafficking. [provided by RefSeq, Jul 2008]
+</td>
+<td style="text-align:left;min-width: 5cm; max-width: 10cm; ">
+<a href="GO:0005515" class="uri">GO:0005515</a>; <a href="GO:0070273"
+class="uri">GO:0070273</a>; <a href="GO:0007030"
+class="uri">GO:0007030</a>; <a href="GO:0050714"
+class="uri">GO:0050714</a>; <a href="GO:0000139"
+class="uri">GO:0000139</a>; <a href="GO:0005794"
+class="uri">GO:0005794</a>; <a href="GO:0005829"
+class="uri">GO:0005829</a>; <a href="GO:0032580"
+class="uri">GO:0032580</a>; <a href="GO:0032588"
+class="uri">GO:0032588</a>; <a href="GO:0005802"
+class="uri">GO:0005802</a>; <a href="GO:0031985"
+class="uri">GO:0031985</a>; <a href="GO:0043001"
+class="uri">GO:0043001</a>; <a href="GO:0006890"
+class="uri">GO:0006890</a>; <a href="GO:0048194"
+class="uri">GO:0048194</a>
+</td>
+<td style="text-align:left;">
+protein binding;phosphatidylinositol-4-phosphate binding;Golgi
+organization;positive regulation of protein secretion;Golgi
+membrane;Golgi apparatus;cytosol;Golgi cisterna membrane;trans-Golgi
+network membrane;trans-Golgi network;Golgi cisterna;Golgi to plasma
+membrane protein transport;retrograde vesicle-mediated transport, Golgi
+to endoplasmic reticulum;Golgi vesicle budding
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GDF7
+</td>
+<td style="text-align:left;">
+GDF7
+</td>
+<td style="text-align:left;">
+151449
+</td>
+<td style="text-align:left;">
+growth differentiation factor 7
+</td>
+<td style="text-align:left;">
+protein coding
+</td>
+<td style="text-align:left;">
+REVIEWED
+</td>
+<td style="text-align:left;">
+BMP12
+</td>
+<td style="text-align:left;min-width: 10cm; ">
+This gene encodes a secreted ligand of the TGF-beta (transforming growth
+factor-beta) superfamily of proteins. Ligands of this family bind
+various TGF-beta receptors leading to recruitment and activation of SMAD
+family transcription factors that regulate gene expression. The encoded
+preproprotein is proteolytically processed to generate each subunit of
+the disulfide-linked homodimer. This protein may play a role in the
+differentiation of tendon cells and spinal cord interneurons. A mutation
+in this gene may be associated with increased risk for Barrett’s
+esophagus and esophageal adenocarcinoma. [provided by RefSeq, Sep 2016]
+</td>
+<td style="text-align:left;min-width: 5cm; max-width: 10cm; ">
+<a href="GO:0008083" class="uri">GO:0008083</a>; <a href="GO:0042802"
+class="uri">GO:0042802</a>; <a href="GO:0007411"
+class="uri">GO:0007411</a>; <a href="GO:0010628"
+class="uri">GO:0010628</a>; <a href="GO:0021509"
+class="uri">GO:0021509</a>; <a href="GO:0021527"
+class="uri">GO:0021527</a>; <a href="GO:0022612"
+class="uri">GO:0022612</a>; <a href="GO:0030509"
+class="uri">GO:0030509</a>; <a href="GO:0030855"
+class="uri">GO:0030855</a>; <a href="GO:0030901"
+class="uri">GO:0030901</a>; <a href="GO:0032924"
+class="uri">GO:0032924</a>; <a href="GO:0045165"
+class="uri">GO:0045165</a>; <a href="GO:0045666"
+class="uri">GO:0045666</a>; <a href="GO:0045893"
+class="uri">GO:0045893</a>; <a href="GO:0048608"
+class="uri">GO:0048608</a>; <a href="GO:0048754"
+class="uri">GO:0048754</a>; <a href="GO:0048853"
+class="uri">GO:0048853</a>; <a href="GO:0060391"
+class="uri">GO:0060391</a>; <a href="GO:0060571"
+class="uri">GO:0060571</a>; <a href="GO:2001051"
+class="uri">GO:2001051</a>; <a href="GO:0005125"
+class="uri">GO:0005125</a>; <a href="GO:0005615"
+class="uri">GO:0005615</a>
+</td>
+<td style="text-align:left;">
+growth factor activity;identical protein binding;axon guidance;positive
+regulation of gene expression;roof plate formation;spinal cord
+association neuron differentiation;gland morphogenesis;BMP signaling
+pathway;epithelial cell differentiation;midbrain development;activin
+receptor signaling pathway;cell fate commitment;positive regulation of
+neuron differentiation;positive regulation of DNA-templated
+transcription;reproductive structure development;branching morphogenesis
+of an epithelial tube;forebrain morphogenesis;positive regulation of
+SMAD protein signal transduction;morphogenesis of an epithelial
+fold;positive regulation of tendon cell differentiation;cytokine
+activity;extracellular space
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EHBP1
+</td>
+<td style="text-align:left;">
+EHBP1
+</td>
+<td style="text-align:left;">
+23301
+</td>
+<td style="text-align:left;">
+EH domain binding protein 1
+</td>
+<td style="text-align:left;">
+protein coding
+</td>
+<td style="text-align:left;">
+REVIEWED
+</td>
+<td style="text-align:left;">
+HPC12; NACSIN
+</td>
+<td style="text-align:left;min-width: 10cm; ">
+This gene encodes an Eps15 homology domain binding protein. The encoded
+protein may play a role in endocytic trafficking. A single nucleotide
+polymorphism in this gene is associated with an aggressive form of
+prostate cancer. Alternate splicing results in multiple transcript
+variants. [provided by RefSeq, Feb 2010]
+</td>
+<td style="text-align:left;min-width: 5cm; max-width: 10cm; ">
+<a href="GO:0006897" class="uri">GO:0006897</a>; <a href="GO:0015031"
+class="uri">GO:0015031</a>; <a href="GO:0005654"
+class="uri">GO:0005654</a>; <a href="GO:0005768"
+class="uri">GO:0005768</a>; <a href="GO:0005829"
+class="uri">GO:0005829</a>; <a href="GO:0005886"
+class="uri">GO:0005886</a>
+</td>
+<td style="text-align:left;">
+endocytosis;protein transport;nucleoplasm;endosome;cytosol;plasma
+membrane
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="license" class="section level2">
+<h2>License</h2>
+<p><a
+href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1">CC
+BY-NC-ND 4.0</a></p>
+</div>
+</div>
+
+   
+   
+            
+      
+
+  <script>
+    $(document).ready(function () {
+
+			
+ 		
+	    });
+  </script>
+
+
+
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+	document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+  
+</body>
+</html>
