@@ -31,3 +31,7 @@ pre, code {
   color: #ffffff;
 }
 
+#content {
+  max-width: 70% !important;
+}
+
